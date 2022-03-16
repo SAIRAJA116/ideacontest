@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <title>Welcome</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Logo</span>
+    </nav>
+    <div class="container mt-4 mb-4">
+
+        {% if messages %}
+        <div  class="alert alert-success mt-4" role="alert">
+            {% for i in messages %}
+            {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div >{{i}}</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <table class="table">
+                <thead>
+                  <tr>
+                    
+                    <th style="border: 2px solid;" scope="col"><b>Parameters / units</b></th>
+                    <th style="border: 2px solid;" scope="col"><b>Optimal range</b></th>
+                    <th style="border: 2px solid;" scope="col"><b>Actual value</b></th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                
+                {% for i in parameters %}
+                    <tr>
+                        <td style="border: 2px solid;"><b>{{i.ppname}}  ({{i.units}})</b></td>
+                        <td style="border: 2px solid;">{{i.optimalrange}}</td>
+                        <td style="border: 2px solid;"><input name="para:{{i.id}}" class="form-control"  type="text" /></td>
+                    </tr>
+                {% endfor %}
+                
+                </tbody>
+              </table>
+
+            <div class="d-flex justify-content-around">
+                <select style="width: 45%;" class="form-control" name="atmos" required>
+                    <option value="" disabled selected>Atmosperic Conditons</option>
+                    {% for i in atmos %}
+                        <option value="{{i.id}}">{{i.acname}}</option>
+                    {% endfor %}
+                </select>
+                <select style="width: 45%;" class="form-control" name="pond" required>
+                    <option value="" disabled selected>Pond Conditons</option>
+                    {% for i in pond %}
+                        <option value="{{i.id}}">{{i.pcname}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="btn btn-success mt-4 float-right" type="submit">Result</button>
+        </form>
+
+        
+        
+    </div>
+
+    
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
