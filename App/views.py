@@ -13,13 +13,13 @@ def index(request):
         for i in request.POST:
             if("para" in i):
                 if(len(request.POST.get(i)) > 0):
-                    parameters[i[5:]] = int(request.POST.get(i))
+                    parameters[i[5:]] = float(request.POST.get(i))
         result = list()
         for i in parameters:
             para = ProminentParameter.objects.get(id=i)
-            if(para.lower_boundary >= parameters[i] or para.upper_boundary <= parameters[i]):
+            if(para.lower_boundary > parameters[i] or para.upper_boundary < parameters[i]):
                 atmos = AtmosCondition.objects.get(
-                    id=int(request.POST.get("atmos")))
+                    id=float(request.POST.get("atmos")))
                 pond = PondCondition.objects.get(id=request.POST.get("pond"))
                 combination = Combinations.objects.get(
                     ppname=para, acname=atmos, pcname=pond)
